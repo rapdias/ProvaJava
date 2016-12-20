@@ -1,4 +1,14 @@
 # ProvaJava
+Configuração Inicial:
+- Realize o Fork deste repositório git; 
+- Leia cuidadosamente este documento e implemente os requisitos aqui descritos; 
+- Responda o e-mail que você recebeu do RH inluindo um link para seu repositório git até a data limite informada; 
+ 
+Requisitos a serem  implementados pelo candidato:
+- Melhore a experiência do usuário usando seu melhor julgamento. Nos impressione mudando a fonte, incluindo imagens/glyphicons e mudando as cores utilizadas no tema; 
+- Atenda os requisitos descritos na especificação da aplicação: 
+ 
+Especificação da aplicação:
 A gerência de uma biblioteca deve se preocupar com a qualidade dos seus produtos e dos serviços oferecidos a seus clientes. Esta é a meta principal de sua atuação e para alcançar o aumento de qualidade e produtividade deve-se identificar e eliminar todos os obstáculos. 
  
 A Direção da Fundação Getulio Vargas, em sua nova fase, tem como um de seus objetivos a busca da qualidade total de seus serviços e produtos, o que permite maximizar o potencial institucional, reduzir custos e oferecer atendimento de excelência.  Para tal, foi contratado especialista na busca da Eficácia e Qualidade Organizacional, que vêm desenvolvendo junto a cada gerente, um trabalho voltado para cada um dos setores, obedecendo a métodos bem sucedidos de administração.
