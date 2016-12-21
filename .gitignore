@@ -1,1 +1,8 @@
 livraria/.metadata/.plugins/
+livraria/.classpath
+livraria/build/classes/
+livraria/target/
+livraria/.metadata/
+livraria/.settings/
+livraria/.project
+*.project
