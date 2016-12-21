@@ -11,7 +11,7 @@ Requisitos a serem  implementados pelo candidato:
 Especificação da aplicação:
 A gerência de uma biblioteca deve se preocupar com a qualidade dos seus produtos e dos serviços oferecidos a seus clientes. Esta é a meta principal de sua atuação e para alcançar o aumento de qualidade e produtividade deve-se identificar e eliminar todos os obstáculos. 
  
-A Direção da Fundação Getulio Vargas, em sua nova fase, tem como um de seus objetivos a busca da qualidade total de seus serviços e produtos, o que permite maximizar o potencial institucional, reduzir custos e oferecer atendimento de excelência.  Para tal, foi contratado especialista na busca da Eficácia e Qualidade Organizacional, que vêm desenvolvendo junto a cada gerente, um trabalho voltado para cada um dos setores, obedecendo a métodos bem sucedidos de administração.
+A Direção da Fundação Biblioteca, em sua nova fase, tem como um de seus objetivos a busca da qualidade total de seus serviços e produtos, o que permite maximizar o potencial institucional, reduzir custos e oferecer atendimento de excelência.  Para tal, foi contratado especialista na busca da Eficácia e Qualidade Organizacional, que vêm desenvolvendo junto a cada gerente, um trabalho voltado para cada um dos setores, obedecendo a métodos bem sucedidos de administração.
  
 Como resultado deste trabalho foram solicitadas diversas melhorias para o sistema de controle das bibliotecas da Fundação, de forma a permitir o melhor retorno sobre esse trabalho e a melhor usabilidade para seus utilizadores. 
  
