@@ -18,34 +18,35 @@ public class LoginBean {
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
-	public void init(){
-		
+
+	public void init() {
+
 	}
-	
+
 	public String efetuaLogin() {
-		
+
 		PopulaBanco pb = new PopulaBanco();
-		
+
 		pb.fillLista();
-		
+
 		System.out.println("fazendo login do usuario " + this.usuario.getEmail());
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		boolean existe = new UsuarioDao().existe(this.usuario);
-		if(existe ) {
+		Usuario usuario = new UsuarioDao().existe(this.usuario);
+
+		if (usuario != null) {
 			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
+		} else {
+
+			context.getExternalContext().getFlash().setKeepMessages(true);
+			context.addMessage(null, new FacesMessage("Usuï¿½rio nï¿½o encontrado"));
+
+			pb.dropLista();
 		}
-		
-		context.getExternalContext().getFlash().setKeepMessages(true);
-		context.addMessage(null, new FacesMessage("Usuário não encontrado"));
-		
-		pb.dropLista();
-		
 		return "login?faces-redirect=true";
 	}
-	
+
 	public String deslogar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getSessionMap().remove("usuarioLogado");

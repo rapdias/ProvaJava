@@ -16,4 +16,9 @@ public class JPAUtil {
 	public void close(EntityManager em) {
 		em.close();
 	}
+	
+	public static void main(String[] args) {
+		EntityManager em = new JPAUtil().getEntityManager();
+		System.out.println("asfdadsfdasf");
+	}
 }

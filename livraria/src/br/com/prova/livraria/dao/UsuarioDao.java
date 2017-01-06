@@ -14,26 +14,94 @@ public class UsuarioDao {
 	
 	public static ArrayList<Usuario> LSUsuario = new ArrayList<Usuario>();
 
-	public boolean existe(Usuario usuario) {
+	public Usuario existe(Usuario usu) {
+		Usuario retorno = null;
 		
-		for (Usuario u : LSUsuario) {
-			if(usuario.getEmail().equals(u.getEmail()) && usuario.getSenha().equals(u.getSenha()) ){
-				
-				return true;			
-			}
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			return em.createQuery("FROM Usuario u WHERE u.email like :email  AND u.senha like :senha", Usuario.class)
+			 .setParameter("email", usu.getEmail()).setParameter("senha", usu.getSenha()).getSingleResult();
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return null;
 		}
 		
-		return false;
-				
+//		for (Usuario u : LSUsuario) {
+//			if(usuario.getEmail().equals(u.getEmail()) && usuario.getSenha().equals(u.getSenha()) ){
+//				
+//				return true;			
+//			}
+//		}
+//		return false;				
+	}
+	public static void main(String[] args) {
+		Usuario u = new UsuarioDao().existe(new Usuario("r@r.com", "1", true));
+		System.out.println("asf");
 	}
 	
-	
-	public void pesist(Usuario usuario){
-		LSUsuario.add(usuario);
+	public boolean pesist(Usuario usuario){
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			em.persist(usuario);
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return false;
+		}
+		//LSUsuario.add(usuario);
 	}
 
-	public void drop() {
+	public boolean desabilitarUsuario(Usuario usu){
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			usu.setAtivo(false);
+			em.merge(usu);
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return false;
+		}
+	}
+	
+	public boolean alteraUsuario(Usuario usu){
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			em.merge(usu);
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return false;
+		}
+	}
+	
+	public boolean drop() {
 		// TODO Auto-generated method stub
-		LSUsuario.clear();
+		//LSUsuario.clear();
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			em.createQuery("DELETE FROM Usuario u  WHERE u.id > 0").executeUpdate();
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return false;
+		}
 	}
 }

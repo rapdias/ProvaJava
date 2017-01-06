@@ -117,7 +117,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.3.0.Final</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1212.jre7</version>
+		</dependency>
 
 	</dependencies>
 </project>

@@ -28,8 +28,17 @@ public class Livro implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento = Calendar.getInstance();
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Autor> autores = new ArrayList<Autor>();
+	private boolean ativo;
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
 	public List<Autor> getAutores() {
 		return autores;

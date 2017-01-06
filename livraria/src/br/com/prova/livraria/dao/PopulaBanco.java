@@ -19,65 +19,72 @@ public class PopulaBanco {
 
 
 	public void fillLista() {
-		
 		LivroDao daoL = new LivroDao();
 		AutorDao daoA = new AutorDao();
 		UsuarioDao daoU = new UsuarioDao();
+		if(daoA.listaTodos().size() == 0){
 
-		Autor assis = geraAutor("Machado de Assis","machado@machado.com",1);
-		daoA.pesist(assis);
+			Autor assis = geraAutor("Machado de Assis","machado@machado.com", true);
+			daoA.pesist(assis);
 
-		Autor amado = geraAutor("Jorge Amado","jorge@jorge.com",2);
-		daoA.pesist(amado);
+			Autor amado = geraAutor("Jorge Amado","jorge@jorge.com", true);
+			daoA.pesist(amado);
 
-		Autor coelho = geraAutor("Paulo Coelho","paulo@paulo.com",3);
-		daoA.pesist(coelho);
+			Autor coelho = geraAutor("Paulo Coelho","paulo@paulo.com", true);
+			daoA.pesist(coelho);
 
-		Autor lobato = geraAutor("Monteiro Lobato","monteiro@monteiro.com",4);
-		daoA.pesist(lobato);
-
-		Livro casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro",
-				"10/01/1899", 24.90, assis);
-		Livro memorias = geraLivro("978-8-50-815415-9",
-				"Memorias Postumas de Bras Cubas", "01/01/1881", 19.90, assis);
-		Livro quincas = geraLivro("978-8-50-804084-1", "Quincas Borba",
-				"01/01/1891", 16.90, assis);
-
-		daoL.pesist(casmurro);
-		daoL.pesist(memorias);
-		daoL.pesist(quincas);
-
-		Livro alquemista = geraLivro("978-8-57-542758-3", "O Alquimista",
-				"01/01/1988", 19.90, coelho);
-		Livro brida = geraLivro("978-8-50-567258-7", "Brida", "01/01/1990",
-				12.90, coelho);
-		Livro valkirias = geraLivro("978-8-52-812458-8", "As Valkirias",
-				"01/01/1992", 29.90, coelho);
-		Livro maao = geraLivro("978-8-51-892238-9", "O Diario de um Mago",
-				"01/01/1987", 9.90, coelho);
-
-		daoL.pesist(alquemista);
-		daoL.pesist(brida);
-		daoL.pesist(valkirias);
-		daoL.pesist(maao);
-
-		Livro capitaes = geraLivro("978-8-50-831169-1", "Capitaes da Areia",
-				"01/01/1937", 6.90, amado);
-		Livro flor = geraLivro("978-8-53-592569-9",
-				"Dona Flor e Seus Dois Maridos", "01/01/1966", 18.90, amado);
-
-		daoL.pesist(capitaes);
-		daoL.pesist(flor);
-
-		Usuario adm = new Usuario();
-		adm.setEmail("avanade@avanade.com");
-		adm.setSenha("1234");
-		adm.setId(1);		
-		daoU.pesist(adm);
+			Autor lobato = geraAutor("Monteiro Lobato","monteiro@monteiro.com", true);
+			daoA.pesist(lobato);
 		
-		
+			
+			Livro casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro",
+					"10/01/1899", 24.90, assis, true);
+			Livro memorias = geraLivro("978-8-50-815415-9",
+					"Memorias Postumas de Bras Cubas", "01/01/1881", 19.90, assis, true);
+			Livro quincas = geraLivro("978-8-50-804084-1", "Quincas Borba",
+					"01/01/1891", 16.90, assis, true);
 
+			daoL.pesist(casmurro);
+			daoL.pesist(memorias);
+			daoL.pesist(quincas);
+
+			Livro alquemista = geraLivro("978-8-57-542758-3", "O Alquimista",
+					"01/01/1988", 19.90, coelho, true);
+			Livro brida = geraLivro("978-8-50-567258-7", "Brida", "01/01/1990",
+					12.90, coelho, true);
+			Livro valkirias = geraLivro("978-8-52-812458-8", "As Valkirias",
+					"01/01/1992", 29.90, coelho, true);
+			Livro maao = geraLivro("978-8-51-892238-9", "O Diario de um Mago",
+					"01/01/1987", 9.90, coelho, true);
+
+			daoL.pesist(alquemista);
+			daoL.pesist(brida);
+			daoL.pesist(valkirias);
+			daoL.pesist(maao);
+
+			Livro capitaes = geraLivro("978-8-50-831169-1", "Capitaes da Areia",
+					"01/01/1937", 6.90, amado, true);
+			Livro flor = geraLivro("978-8-53-592569-9",
+					"Dona Flor e Seus Dois Maridos", "01/01/1966", 18.90, amado, true);
+
+			daoL.pesist(capitaes);
+			daoL.pesist(flor);
+
+			Usuario adm = new Usuario();
+			adm.setEmail("avanade@avanade.com");
+			adm.setSenha("1234");
+			adm.setAtivo(true);
+			daoU.pesist(adm);
+			
+			Usuario adm2 = new Usuario();
+			adm2.setEmail("r@r.com");
+			adm2.setSenha("1");
+			adm2.setAtivo(true);
+			daoU.pesist(adm2);
+		}
 	}
+	
+	
 	
 	public void dropLista(){
 		LivroDao daoL = new LivroDao();
@@ -91,21 +98,22 @@ public class PopulaBanco {
 	
 	
 	
-	private static Autor geraAutor(String nome,String email, int id) {
+	private static Autor geraAutor(String nome,String email,  boolean ativo) {
 		Autor autor = new Autor();
 		autor.setNome(nome);
 		autor.setEmail(email);
-		autor.setId(id);
+		autor.setAtivo(ativo);
 		return autor;
 	}
 
 	private static Livro geraLivro(String isbn, String titulo, String data,
-			double preco, Autor autor) {
+			double preco, Autor autor, boolean ativo) {
 		Livro livro = new Livro();
 		livro.setIsbn(isbn);
 		livro.setTitulo(titulo);
 		livro.setDataLancamento(parseData(data));
 		livro.setPreco(preco);
+		livro.setAtivo(ativo);
 		livro.adicionaAutor(autor);
 		return livro;
 	}
