@@ -28,3 +28,11 @@ Na tela de criação de livros a sessão inclusão de autor deve ser exibida em 
 Na tela da função de listar os livros será necessário centralizar os botões da grid alterar e remover. Também deverá ser excluído o componente de paginação superior, mantendo apenas o inferior. Além disso, para aumentar a segurança do sistema deverá ser implementada na funcionalidade de exclusão de livros um modal de confirmação para a ação. Ainda nesta tela, centralizar o botão Gravar e retirar o fundo preto desta sessão para melhorar a usabilidade para os usuários. 
  
 Por fim, para facilitar o login dos usuários, na tela login será necessário manter os e-mails validos digitados em cookies.
+
+
+
+
+
+// MINHAS OBSERVAÇ˜OES:
+ - TABELA USUARIO TEM QUE TER UMA COLUNA BOOLEAN PARA DESABILITAR O USU´ARIO E NAO DELET´A-LO, ASSIM TAMBEM COM AS TABELAS LIVRO E AUTOR POIS ESSES DADOS PODERAO SER USADOS POSTERIOR PARA RELAT´ORIOS/BALANCO/AUDITORIA/ETC
+ 
