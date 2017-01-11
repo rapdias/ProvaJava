@@ -6,3 +6,5 @@ livraria/.metadata/
 livraria/.settings/
 livraria/.project
 *.project
+/target/
+/bin/
