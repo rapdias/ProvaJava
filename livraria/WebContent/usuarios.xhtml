@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+
+
+	<ui:define name="titulo">
+		<p:outputPanel>Novo Usuário</p:outputPanel>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="usuario">
+			<p:fieldset legend="Dados do Usuário">
+				<h:panelGrid columns="3">
+
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
+						required="true">
+						<f:ajax event="blur" render="messageNome" />
+					</p:inputText>
+					<p:message for="nome" id="messageNome" />
+
+					<p:outputLabel value="Sobrenome" for="sobrenome" />
+					<p:inputText id="sobrenome"
+						value="#{usuarioBean.usuario.sobrenome}" required="true">
+						<f:ajax event="blur" render="messageSobrenome" />
+					</p:inputText>
+					<p:message for="nome" id="messageSobrenome" />
+
+					<p:outputLabel value="Email:" for="email" />
+					<p:inputText id="email" value="#{usuarioBean.usuario.email}"
+						required="true" validatorMessage="Email inválido">
+						<f:attribute name="type" value="email" />
+						<f:passThroughAttribute name="placeholder"
+							value="Email do usuário" />
+						<f:validateRegex pattern=".+@.+" />
+						<f:ajax event="blur" render="messageEmail" />
+					</p:inputText>
+					<p:message for="email" id="messageEmail" />
+
+
+					<h:outputLabel for="pwd1" value="Senha: " />
+					<p:password id="pwd1" value="#{usuarioBean.usuario.senha}"
+						match="pwd2" label="ps1" required="true" />
+					<p:message for="pwd1" id="msgpwd1" />
+
+					<h:outputLabel for="pwd2" value="Confirme a senha: " />
+					<p:password id="pwd2" value="#{usuarioBean.usuario.senha}"
+						label="pwd2" required="true" />
+					<p:message for="pwd2" id="msgpwd2" />
+
+
+					<p:outputLabel value="Selecione o Perfil" for="perfil2" />
+					<p:selectOneMenu value="#{usuarioBean.idPerfil}" id="perfil2" >
+						<f:selectItems  value="#{perfilBean.listaPerfil}" var="perfil"
+							itemLabel="#{perfil.perfil}" itemValue="#{perfil.id}"
+							 />
+					</p:selectOneMenu>
+					<p:message for="perfil2" id="messagePerfil" />
+
+					<p:commandButton value="Gravar" action="#{usuarioBean.gravar}"
+						process="@form" update="@form formTabelaUsers" />
+
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+
+		<h:form id="formTabelaUsers">
+			<p:dataList value="#{usuarioBean.usuarios}" var="usu" type="definition">
+					<f:facet name="header">
+						Usuários
+					</f:facet>
+					
+					<p:commandButton icon="fa fa-fw fa-edit" update=":usuario">
+						<f:setPropertyActionListener value="#{usu}" target="#{usuarioBean.usuario}" />
+					</p:commandButton>
+					
+					<p:commandButton icon="fa fa-fw fa-remove" action="#{usuarioBean.remover(usu)}" 
+						update="@form" />
+						
+					#{usu.nome} #{usu.sobrenome} - #{usu.email} - #{usu.perfil.perfil}
+				</p:dataList>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
