@@ -4,71 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 
-import br.com.prova.livraria.modelo.Autor;
 import br.com.prova.livraria.modelo.Livro;
 import br.com.prova.livraria.modelo.Perfil;
 import br.com.prova.livraria.modelo.Usuario;
 
-public class UsuarioDao {
+public class PerfilDao {
 
-	public static ArrayList<Usuario> LSUsuario = new ArrayList<Usuario>();
-
-	public Usuario existe(Usuario usu) {
-		Usuario retorno = null;
-
+	public boolean pesist(Perfil perfil) {
 		EntityManager em = null;
 		try {
 			em = new JPAUtil().getEntityManager();
-			return em.createQuery("FROM Usuario u WHERE u.email like :email  AND u.senha like :senha", Usuario.class)
-					.setParameter("email", usu.getEmail()).setParameter("senha", usu.getSenha()).getSingleResult();
+			em.getTransaction().begin();
+			em.persist(perfil);
+			em.getTransaction().commit();
+			return true;
 		} catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
-			return null;
+			e.printStackTrace();
+			em.getTransaction().rollback();
+			return false;
+		}finally {
+			em.close();
 		}
-
-		// for (Usuario u : LSUsuario) {
-		// if(usuario.getEmail().equals(u.getEmail()) &&
-		// usuario.getSenha().equals(u.getSenha()) ){
-		//
-		// return true;
-		// }
-		// }
-		// return false;
+	//	LSLivro.add(livro);
 	}
 
-	public static void main(String[] args) {
-		boolean u = new UsuarioDao()
-				.pesist(new Usuario(true, "r@r.com", "Rogerio", "1", "Ap. Dias", new Perfil("Administrador", true)));
-		System.out.println("asf");
-	}
-
-	public boolean atualiza(Usuario usu) {
+	public boolean drop() {
+		// TODO Auto-generated method stub
+		//LSLivro.clear();
 		EntityManager em = null;
 		try{
 			em = new JPAUtil().getEntityManager();
 			em.getTransaction().begin();
-			em.merge(usu);
+			//em.createQuery("DELETE FROM Livro l  WHERE l.id > 0").executeUpdate();
+			em.createQuery("DELETE FROM  Perfil  WHERE id > 0").executeUpdate();
+		//	em.createQuery("DELETE FROM Autor   WHERE id > 0").executeUpdate();
 			em.getTransaction().commit();
-			em.close();
 			return true;
 		}catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			em.getTransaction().rollback();	
-			em.close();
 			return false;
 		}finally {
 			em.close();
 		}
 	}
-	public List<Usuario> listaTodos() {
+
+	public List<Perfil> listaTodos() {
 		// TODO Auto-generated method stub
 		EntityManager em = null;
 		try {
 			em = new JPAUtil().getEntityManager();
-			return em.createQuery("SELECT u FROM Usuario u WHERE u.ativo = true").getResultList();
+			return em.createQuery("SELECT p FROM Perfil p WHERE p.ativo = true").getResultList();
 		} catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			e.printStackTrace();
@@ -76,78 +64,98 @@ public class UsuarioDao {
 		}finally {
 			em.close();
 		}
-		
-		//return LSAutor;
-	}
-	public boolean pesist(Usuario usuario) {
-		EntityManager em = null;
-		try {
-			em = new JPAUtil().getEntityManager();
-			em.getTransaction().begin();
-			em.persist(usuario);
-			em.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			// TODO: LOG DO SISTEMA PARA ESSE ERRO
-			em.getTransaction().rollback();
-			return false;
-		}finally {
-			em.close();
-		}
-		// LSUsuario.add(usuario);
+	//	return LSLivro;
 	}
 
-	public boolean desabilitarUsuario(Usuario usu) {
-		EntityManager em = null;
-		try {
-			em = new JPAUtil().getEntityManager();
-			em.getTransaction().begin();
-			usu.setAtivo(false);
-			em.merge(usu);
-			em.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			// TODO: LOG DO SISTEMA PARA ESSE ERRO
-			em.getTransaction().rollback();
-			return false;
-		}finally {
-			em.close();
-		}
+	public static void main(String[] args) {
+		new PerfilDao().drop();
+	//	List<Livro> ls = new LivroDao().listaTodos();
+		System.out.println("teste ");
 	}
-
-	public boolean alteraUsuario(Usuario usu) {
-		EntityManager em = null;
-		try {
-			em = new JPAUtil().getEntityManager();
-			em.getTransaction().begin();
-			em.merge(usu);
-			em.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			// TODO: LOG DO SISTEMA PARA ESSE ERRO
-			em.getTransaction().rollback();
-			return false;
-		}finally {
-			em.close();
-		}
-	}
-
-	public boolean drop() {
+	public Perfil buscaPorId(Integer id) {
 		// TODO Auto-generated method stub
-		// LSUsuario.clear();
+//		for (Livro livro : LSLivro) {
+//			if (id == livro.getId()) {
+//				return livro;
+//
+//			}
+//		}
+//
+//		return null;
 		EntityManager em = null;
 		try {
 			em = new JPAUtil().getEntityManager();
-			em.getTransaction().begin();
-			em.createQuery("DELETE FROM Usuario u  WHERE u.id > 0").executeUpdate();
-			em.getTransaction().commit();
-			return true;
+			 return em.find(Perfil.class, id);
 		} catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
-			em.getTransaction().rollback();
+			return null;
+		}finally {
+			em.close();
+		}
+	}
+
+	public boolean adiciona(Livro livro) {
+		
+		//LSLivro.add(livro);
+
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			em.persist(livro);
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
 			return false;
 		}finally {
 			em.close();
 		}
+	}
+
+	public boolean atualiza(Livro livro) {
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			em.merge(livro);
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return false;
+		}finally {
+			em.close();
+		}
+		
+//		for (Livro l : LSLivro) {
+//			if (livro.getId() == l.getId()) {
+//
+//				l.setTitulo(livro.getTitulo());
+//			}
+//		}
+	}
+
+	public boolean remove(Livro livro) {
+		// TODO Auto-generated method stub
+		
+		EntityManager em = null;
+		try{
+			em = new JPAUtil().getEntityManager();
+			em.getTransaction().begin();
+			livro.setAtivo(false);
+			em.merge(livro);
+			em.getTransaction().commit();
+			return true;
+		}catch (Exception e) {
+			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			em.getTransaction().rollback();	
+			return false;
+		}finally {
+			em.close();
+		}
+
 	}
 }

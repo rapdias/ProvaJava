@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import br.com.prova.livraria.Enum.EnumMsgm;
 import br.com.prova.livraria.modelo.Livro;
 import br.com.prova.livraria.modelo.Usuario;
 
@@ -22,8 +23,11 @@ public class LivroDao {
 			return true;
 		} catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
+			e.printStackTrace();
 			em.getTransaction().rollback();
 			return false;
+		}finally {
+			em.close();
 		}
 	//	LSLivro.add(livro);
 	}
@@ -35,13 +39,17 @@ public class LivroDao {
 		try{
 			em = new JPAUtil().getEntityManager();
 			em.getTransaction().begin();
-			em.createQuery("DELETE FROM Livro l  WHERE l.id > 0").executeUpdate();
+			//em.createQuery("DELETE FROM Livro l  WHERE l.id > 0").executeUpdate();
+			em.createQuery("DELETE FROM  Livro  WHERE id > 0").executeUpdate();
+		//	em.createQuery("DELETE FROM Autor   WHERE id > 0").executeUpdate();
 			em.getTransaction().commit();
 			return true;
 		}catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			em.getTransaction().rollback();	
 			return false;
+		}finally {
+			em.close();
 		}
 	}
 
@@ -55,6 +63,8 @@ public class LivroDao {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			e.printStackTrace();
 			return null;
+		}finally {
+			em.close();
 		}
 	//	return LSLivro;
 	}
@@ -81,6 +91,8 @@ public class LivroDao {
 		} catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			return null;
+		}finally {
+			em.close();
 		}
 	}
 
@@ -99,21 +111,23 @@ public class LivroDao {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			em.getTransaction().rollback();	
 			return false;
+		}finally {
+			em.close();
 		}
 	}
 
-	public boolean atualiza(Livro livro) {
+	public String atualiza(Livro livro) {
 		EntityManager em = null;
 		try{
 			em = new JPAUtil().getEntityManager();
 			em.getTransaction().begin();
 			em.merge(livro);
 			em.getTransaction().commit();
-			return true;
+			return EnumMsgm.CAD_LIVRO_ATUALIZADO.getMsgm();
 		}catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			em.getTransaction().rollback();	
-			return false;
+			return EnumMsgm.ERRO_LIVRO_ATUALIZAR.getMsgm();
 		}
 		
 //		for (Livro l : LSLivro) {
@@ -124,7 +138,7 @@ public class LivroDao {
 //		}
 	}
 
-	public boolean remove(Livro livro) {
+	public String remove(Livro livro) {
 		// TODO Auto-generated method stub
 		
 		EntityManager em = null;
@@ -134,11 +148,13 @@ public class LivroDao {
 			livro.setAtivo(false);
 			em.merge(livro);
 			em.getTransaction().commit();
-			return true;
+			return EnumMsgm.CAD_LIVRO_DEL.getMsgm();
 		}catch (Exception e) {
 			// TODO: LOG DO SISTEMA PARA ESSE ERRO
 			em.getTransaction().rollback();	
-			return false;
+			return EnumMsgm.ERRO_LIVRO_ATUALIZAR.getMsgm();
+		}finally {
+			em.close();
 		}
 
 	}

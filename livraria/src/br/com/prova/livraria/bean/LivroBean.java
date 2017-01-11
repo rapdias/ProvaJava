@@ -42,12 +42,8 @@ public class LivroBean implements Serializable {
 	}
 
 	public List<Livro> getLivros() {
-		
-		if(this.livros == null) {
-			this.livros = daoL.listaTodos();			
-		}
-		
-		return livros;
+
+		return daoL.listaTodos();
 	}
 
 	public List<Autor> getAutores() {
@@ -79,11 +75,14 @@ public class LivroBean implements Serializable {
 
 	
 		
-		if(this.livro.getId() == null) {
+		if(this.livro.getId() == 0) {
+			this.livro.setAtivo(true);
 			daoL.adiciona(this.livro);
 			this.livros = daoL.listaTodos();
 		} else {
-			daoL.atualiza(this.livro);
+			FacesContext.getCurrentInstance().addMessage("Livro",
+					new FacesMessage(daoL.atualiza(this.livro)));
+			
 		}
 
 		this.livro = new Livro();
@@ -91,7 +90,10 @@ public class LivroBean implements Serializable {
 
 	public void remover(Livro livro) {
 		System.out.println("Removendo livro");
-		daoL.remove(livro);
+		FacesContext.getCurrentInstance().addMessage("Livro",
+				new FacesMessage(daoL.remove(livro)));
+		
+		getLivros();	
 	}
 	
 	public void removerAutorDoLivro(Autor autor) {
@@ -104,7 +106,7 @@ public class LivroBean implements Serializable {
 	}
 	
 	public String formAutor() {
-		System.out.println("Chamanda do formulário do Autor.");
+		System.out.println("Chamanda do formulï¿½rio do Autor.");
 		return "autor?faces-redirect=true";
 	}
 
@@ -114,7 +116,7 @@ public class LivroBean implements Serializable {
 		String valor = value.toString();
 		if (!valor.startsWith("1")) {
 			throw new ValidatorException(new FacesMessage(
-					"ISBN deveria começar com 1"));
+					"ISBN deveria comeï¿½ar com 1"));
 		}
 
 	}
