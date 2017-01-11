@@ -11,6 +11,7 @@
 		<class>br.com.prova.livraria.modelo.Usuario</class>
 		<class>br.com.prova.livraria.modelo.Livro</class>
 		<class>br.com.prova.livraria.modelo.Autor</class>
+		<class>br.com.prova.livraria.modelo.Perfil</class>
 
 		<properties>
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
